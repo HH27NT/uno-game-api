@@ -1,0 +1,692 @@
+{
+  "info": {
+    "name": "UNO Backend - Evaluacion Programacion 4",
+    "description": "Coleccion para probar el backend del UNO: registro/login, CRUD y flujo de partida",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "gameId",
+      "value": ""
+    },
+    {
+      "key": "playerId",
+      "value": "1"
+    },
+    {
+      "key": "cardId",
+      "value": "1"
+    },
+    {
+      "key": "scoreId",
+      "value": "1"
+    },
+    {
+      "key": "challengedPlayerId",
+      "value": "2"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Registrar usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"hector\",\n  \"email\": \"hector@correo.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "Iniciar sesion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json()",
+                  "if (data.access_token) pm.collectionVariables.set('access_token', data.access_token)"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"hector\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Obtener perfil",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/profile"
+          }
+        },
+        {
+          "name": "Cerrar sesion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/auth/logout"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Players (CRUD)",
+      "item": [
+        {
+          "name": "Create Player",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"ana123\",\n  \"email\": \"ana123@correo.com\"\n}"
+            },
+            "url": "{{baseUrl}}/players"
+          }
+        },
+        {
+          "name": "Get All Players",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/players"
+          }
+        },
+        {
+          "name": "Get Player by Id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/players/{{playerId}}"
+          }
+        },
+        {
+          "name": "Update Player",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"ana_nueva\"\n}"
+            },
+            "url": "{{baseUrl}}/players/{{playerId}}"
+          }
+        },
+        {
+          "name": "Delete Player",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/players/{{playerId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games (CRUD)",
+      "item": [
+        {
+          "name": "Create Game",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = pm.response.json()",
+                  "if (data.id) pm.collectionVariables.set('gameId', data.id)"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Partida de prueba\",\n  \"maxPlayers\": 4\n}"
+            },
+            "url": "{{baseUrl}}/games"
+          }
+        },
+        {
+          "name": "Get All Games",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games"
+          }
+        },
+        {
+          "name": "Get Game by Id (con cartas)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/{{gameId}}"
+          }
+        },
+        {
+          "name": "Update Game",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maxPlayers\": 3\n}"
+            },
+            "url": "{{baseUrl}}/games/{{gameId}}"
+          }
+        },
+        {
+          "name": "Delete Game",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/games/{{gameId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games (flujo de partida)",
+      "item": [
+        {
+          "name": "Unirse a juego",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/join"
+          }
+        },
+        {
+          "name": "Iniciar juego",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/start"
+          }
+        },
+        {
+          "name": "Abandonar juego",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/leave"
+          }
+        },
+        {
+          "name": "Finalizar juego",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/end"
+          }
+        },
+        {
+          "name": "Obtener estado del juego",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/state?game_id={{gameId}}"
+          }
+        },
+        {
+          "name": "Obtener lista de jugadores",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/players?game_id={{gameId}}"
+          }
+        },
+        {
+          "name": "Obtener jugador actual",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/current-player?game_id={{gameId}}"
+          }
+        },
+        {
+          "name": "Obtener carta superior del descarte",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/top-card?game_id={{gameId}}"
+          }
+        },
+        {
+          "name": "Obtener puntuaciones actuales",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/scores?game_id={{gameId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Games (jugadas - semana 6)",
+      "item": [
+        {
+          "name": "Jugar carta",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}},\n  \"card_id\": {{cardId}},\n  \"declared_color\": \"red\"\n}"
+            },
+            "url": "{{baseUrl}}/games/play"
+          }
+        },
+        {
+          "name": "Robar carta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/draw"
+          }
+        },
+        {
+          "name": "Decir UNO",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/uno"
+          }
+        },
+        {
+          "name": "Desafiar por no decir UNO",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"game_id\": {{gameId}},\n  \"challenged_player_id\": {{challengedPlayerId}}\n}"
+            },
+            "url": "{{baseUrl}}/games/challenge"
+          }
+        },
+        {
+          "name": "Ver mi mano",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{access_token}}"
+              }
+            ],
+            "url": "{{baseUrl}}/games/hand?game_id={{gameId}}"
+          }
+        },
+        {
+          "name": "Ver historial de movimientos",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/games/history?game_id={{gameId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cards (CRUD)",
+      "item": [
+        {
+          "name": "Get Cards by Game",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cards/game/{{gameId}}"
+          }
+        },
+        {
+          "name": "Get Card by Id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/cards/{{cardId}}"
+          }
+        },
+        {
+          "name": "Update Card (ej. asignarla a un jugador)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ownerId\": 1,\n  \"location\": \"hand\"\n}"
+            },
+            "url": "{{baseUrl}}/cards/{{cardId}}"
+          }
+        },
+        {
+          "name": "Delete Card",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/cards/{{cardId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scores (CRUD)",
+      "item": [
+        {
+          "name": "Create Score",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"playerId\": 1,\n  \"gameId\": 1,\n  \"points\": 45,\n  \"result\": \"win\"\n}"
+            },
+            "url": "{{baseUrl}}/scores"
+          }
+        },
+        {
+          "name": "Get Scores by Player",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/scores/player/{{playerId}}"
+          }
+        },
+        {
+          "name": "Get Score by Id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/scores/{{scoreId}}"
+          }
+        },
+        {
+          "name": "Update Score",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"points\": 60\n}"
+            },
+            "url": "{{baseUrl}}/scores/{{scoreId}}"
+          }
+        },
+        {
+          "name": "Delete Score",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/scores/{{scoreId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Turnos",
+      "item": [
+        {
+          "name": "Siguiente turno",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"players\": [\n    \"Alice\",\n    \"Bob\",\n    \"Charlie\",\n    \"Diana\"\n  ],\n  \"currentPlayerIndex\": 1\n}"
+            },
+            "url": "{{baseUrl}}/turns/next-turn"
+          }
+        },
+        {
+          "name": "Jugar carta de salto (skip)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cardPlayed\": \"skip\",\n  \"currentPlayerIndex\": 2,\n  \"players\": [\n    \"Alice\",\n    \"Bob\",\n    \"Charlie\",\n    \"Diana\"\n  ],\n  \"direction\": \"clockwise\"\n}"
+            },
+            "url": "{{baseUrl}}/turns/play-card"
+          }
+        },
+        {
+          "name": "Jugar carta de reversa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cardPlayed\": \"reverse\",\n  \"currentPlayerIndex\": 2,\n  \"players\": [\n    \"Alice\",\n    \"Bob\",\n    \"Charlie\",\n    \"Diana\"\n  ],\n  \"direction\": \"clockwise\"\n}"
+            },
+            "url": "{{baseUrl}}/turns/play-card"
+          }
+        },
+        {
+          "name": "Robar carta hasta que sea jugable",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"playerHand\": [\n    \"red_2\",\n    \"blue_5\"\n  ],\n  \"deck\": [\n    \"green_4\",\n    \"yellow_skip\",\n    \"red_9\"\n  ],\n  \"currentCard\": \"blue_7\"\n}"
+            },
+            "url": "{{baseUrl}}/turns/draw-card"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stats",
+      "item": [
+        {
+          "name": "Total de requests por endpoint y metodo",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stats/requests"
+          }
+        },
+        {
+          "name": "Tiempos de respuesta (avg/min/max) por endpoint",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stats/response-times"
+          }
+        },
+        {
+          "name": "Resumen de codigos de estado",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stats/status-codes"
+          }
+        },
+        {
+          "name": "Endpoint mas popular",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stats/popular-endpoints"
+          }
+        }
+      ]
+    }
+  ]
+}

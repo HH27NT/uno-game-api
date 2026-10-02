@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>UNO Capstone</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>UNO</h1>
+    <div id="user-info" class="hidden">
+      <span id="username-label"></span>
+      <button id="logout-btn">salir</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="auth-section">
+      <div class="tabs">
+        <button id="tab-login" class="tab active" type="button">Iniciar sesion</button>
+        <button id="tab-register" class="tab" type="button">Registrarse</button>
+      </div>
+
+      <form id="login-form">
+        <input type="text" id="login-username" placeholder="usuario" required />
+        <input type="password" id="login-password" placeholder="password" required />
+        <button type="submit">Entrar</button>
+      </form>
+
+      <form id="register-form" class="hidden">
+        <input type="text" id="register-username" placeholder="usuario" required />
+        <input type="email" id="register-email" placeholder="email" required />
+        <input type="password" id="register-password" placeholder="password (minimo 6)" required />
+        <button type="submit">Registrarme</button>
+      </form>
+
+      <p id="auth-message" class="message"></p>
+    </section>
+
+    <section id="lobby-section" class="hidden">
+      <h2>Lobby</h2>
+      <form id="create-game-form">
+        <input type="text" id="game-name" placeholder="nombre de la partida" />
+        <input type="number" id="game-max-players" min="2" max="10" value="4" title="max jugadores" />
+        <button type="submit">Crear partida</button>
+      </form>
+
+      <button id="refresh-games-btn" type="button">Refrescar lista</button>
+
+      <table id="games-table">
+        <thead>
+          <tr><th>ID</th><th>Nombre</th><th>Estado</th><th>Jugadores</th><th></th></tr>
+        </thead>
+        <tbody id="games-tbody"></tbody>
+      </table>
+
+      <p id="lobby-message" class="message"></p>
+    </section>
+
+    <section id="game-section" class="hidden">
+      <div class="game-top">
+        <button id="back-to-lobby-btn" type="button">&larr; volver al lobby</button>
+        <h2 id="game-title"></h2>
+        <span id="game-status"></span>
+      </div>
+
+      <div class="board">
+        <div class="panel players-panel">
+          <h3>Jugadores</h3>
+          <ul id="players-list"></ul>
+          <div class="actions">
+            <button id="start-btn" class="hidden" type="button">Iniciar partida</button>
+            <button id="end-btn" class="hidden" type="button">Terminar partida</button>
+            <button id="leave-btn" type="button">Salir de la partida</button>
+          </div>
+        </div>
+
+        <div class="panel center-panel">
+          <div class="pile">
+            <div class="pile-slot">
+              <p>Mazo</p>
+              <div class="card back">UNO</div>
+            </div>
+            <div class="pile-slot">
+              <p>Descarte</p>
+              <div id="top-card" class="card"></div>
+            </div>
+          </div>
+
+          <div id="color-picker" class="hidden">
+            <p>Elegi un color para el comodin:</p>
+            <button data-color="red" class="color-btn red" type="button"></button>
+            <button data-color="yellow" class="color-btn yellow" type="button"></button>
+            <button data-color="green" class="color-btn green" type="button"></button>
+            <button data-color="blue" class="color-btn blue" type="button"></button>
+          </div>
+
+          <div class="actions">
+            <button id="draw-btn" type="button">Robar carta</button>
+            <button id="uno-btn" type="button">Decir UNO</button>
+          </div>
+          <div class="actions">
+            <select id="challenge-select"></select>
+            <button id="challenge-btn" type="button">Desafiar (no dijo UNO)</button>
+          </div>
+
+          <p id="game-message" class="message"></p>
+        </div>
+
+        <div class="panel log-panel">
+          <h3>Historial</h3>
+          <ul id="history-list"></ul>
+        </div>
+      </div>
+
+      <div class="panel hand-panel">
+        <h3>Tu mano</h3>
+        <div id="hand-cards"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+node_modules/
+database.sqlite
+database.sqlite-journal
+.env
+coverage/
+logs/
+jmeter_results.jtl
+jmeter_run.log
+jmeter.log
+reiniciar-servidor.bat
+abrir-jmeter.bat

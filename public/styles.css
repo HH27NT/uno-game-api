@@ -1,0 +1,250 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  color: #222;
+}
+
+.hidden {
+  display: none !important;
+}
+
+header {
+  background: #c0392b;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+#user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+main {
+  max-width: 950px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+section {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+}
+
+.tabs {
+  margin-bottom: 10px;
+}
+
+.tab {
+  background: #eee;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #c0392b;
+  color: white;
+}
+
+form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+input,
+select {
+  padding: 6px;
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+button {
+  padding: 6px 12px;
+  border: 1px solid #999;
+  border-radius: 4px;
+  background: #eee;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ddd;
+}
+
+.message {
+  color: #c0392b;
+  min-height: 18px;
+  font-size: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th,
+td {
+  border-bottom: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.game-top {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 200px 1fr 220px;
+  gap: 12px;
+}
+
+.panel {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+#players-list,
+#history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+#players-list li,
+#history-list li {
+  padding: 4px 0;
+  border-bottom: 1px dashed #ddd;
+}
+
+#players-list li.current-turn {
+  font-weight: bold;
+  color: #c0392b;
+}
+
+.center-panel {
+  text-align: center;
+}
+
+.pile {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 70px;
+  height: 100px;
+  border-radius: 8px;
+  border: 2px solid #333;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+.card.back {
+  background: repeating-linear-gradient(45deg, #333, #333 6px, #444 6px, #444 12px);
+  font-size: 14px;
+}
+
+.card.red {
+  background: #c0392b;
+}
+
+.card.yellow {
+  background: #d4ac0d;
+}
+
+.card.green {
+  background: #27ae60;
+}
+
+.card.blue {
+  background: #2874a6;
+}
+
+.card.wild {
+  background: linear-gradient(135deg, #c0392b 25%, #d4ac0d 25% 50%, #27ae60 50% 75%, #2874a6 75%);
+}
+
+#hand-cards {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+#hand-cards .card {
+  cursor: pointer;
+}
+
+#hand-cards .card.playable {
+  border-color: #f1c40f;
+  box-shadow: 0 0 0 2px #f1c40f;
+}
+
+#color-picker {
+  margin: 10px 0;
+}
+
+.color-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.color-btn.red {
+  background: #c0392b;
+}
+
+.color-btn.yellow {
+  background: #d4ac0d;
+}
+
+.color-btn.green {
+  background: #27ae60;
+}
+
+.color-btn.blue {
+  background: #2874a6;
+}
