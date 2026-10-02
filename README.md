@@ -5,6 +5,15 @@ Electron desktop wrapper. Built as the capstone project for *Programación 4* at
 
 **Stack:** Node.js · Express 4 · Sequelize 6 (SQLite) · Socket.IO 4 · Winston · Jest + Supertest · Electron
 
+![Game in progress](docs/game.png)
+
+<details>
+<summary>Lobby</summary>
+
+![Lobby](docs/lobby.png)
+
+</details>
+
 ## Features
 
 - **Auth:** register, login, logout and profile. Passwords are hashed with `crypto.scrypt`
