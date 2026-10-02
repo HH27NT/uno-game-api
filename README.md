@@ -58,8 +58,7 @@ npm run test:coverage     # with coverage report (threshold: 70%)
 npm run test:e2e          # end-to-end suite only
 ```
 
-Latest local run: **29 suites, 255 tests passing**; coverage 95.7% statements, 83.0% branches,
-98.0% functions, 98.7% lines.
+Latest local run: **29 suites, 255 tests passing**.
 
 A Postman collection (`postman_collection.json`) and a JMeter load-test plan
 (`jmeter_test_plan.jmx`) are included.
@@ -111,4 +110,4 @@ Electron. Proyecto final (capstone) de *Programación 4* en Jala University. Inc
 login con contraseñas hasheadas, flujo completo de partida (unirse, jugar, robar, decir UNO,
 desafiar), motor de reglas con cartas especiales, actualizaciones en tiempo real con Socket.IO,
 estadísticas de uso de la API y caché en memoria. Arranque: `npm install`, copiar `.env.example`
-a `.env` y `npm start`. Pruebas: `npm test` (255 pruebas, cobertura de líneas ~98.7%).
+a `.env` y `npm start`. Pruebas: `npm test` (255 pruebas).
